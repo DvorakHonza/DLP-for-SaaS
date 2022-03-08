@@ -1,0 +1,9 @@
+{
+    "name": "com.deshawn.example",
+    "description": "xcvxvcx",
+    "path": "deshawn.bat",
+    "type": "stdio",
+    "allowed_origins": [
+        "chrome-extension://fbopgogkmkeahhbfaohfcabocolecdkg/"
+    ]
+}
