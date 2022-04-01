@@ -1,0 +1,29 @@
+{
+    "type": "object",
+
+    "properties": {
+        "SafeStorage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+        "StoragePolicySettings": {
+            "type": "object",
+            "properties": {
+                "clipboard": {
+                    "type": "string"
+                },
+                "print": {
+                    "type": "string"
+                },
+                "screenCapture": {
+                    "type": "string"
+                },
+                "upload": {
+                    "type": "string"
+                }
+            }
+        } 
+    }
+}

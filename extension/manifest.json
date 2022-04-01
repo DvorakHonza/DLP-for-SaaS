@@ -12,18 +12,19 @@
         "service_worker": "background.js",
         "type": "module"
     },
-    "content_scripts": [
-        {
-            "matches": ["<all_urls>"],
-            "js": ["src/content_scripts/clipboard.js"]
-        }
-    ],
+    "host_permissions": ["<all_urls>"],
     "permissions": [
-        "downloads",
+        "storage",
+        "tabs",
         "nativeMessaging",
-        "printerProvider"
+        "printerProvider",
+        "scripting",
+        "webRequest",
+        "clipboardRead",
+        "clipboardWrite"
+
     ],
-    "host_permissions": [
-        "http://localhost/"
-    ]
+    "storage": {
+        "managed_schema": "schema.json"
+    }
 }
