@@ -7,6 +7,8 @@
 
 } */
 
+const nativeHostName = "com.dlp_for_saas.native_host";
+
 export function extensionMessageHandler(message, sender, sendResponse) {
     console.log("Message received");
     console.dir(message);
@@ -16,7 +18,8 @@ export function extensionMessageHandler(message, sender, sendResponse) {
 var port = null;
 
 function onMessage(msg) {
-    console.log("Received: " + msg);
+    console.log("Received:");
+    console.dir(msg);
 }
 
 function onDisconnect() {
@@ -27,13 +30,13 @@ function onDisconnect() {
 function connect() {
     if (port == null) {
         console.log("Connecting to port");
-        port = chrome.runtime.connectNative('com.deshawn.example');
+        port = chrome.runtime.connectNative(nativeHostName);
         port.onMessage.addListener(onMessage);
         port.onDisconnect.addListener(onDisconnect);
     }
 }
 
-function sendMessage(msg) {
+export function sendMessage(msg) {
     if (port == null){
         connect();
     }

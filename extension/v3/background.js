@@ -2,6 +2,7 @@
 import { extensionMessageHandler } from "./src/handlers/messaging.js";
 import { isTabSafeStorage, updateCurrentPolicy } from "./src/policyHelper.js";
 import { logUrl } from "./src/handlers/upload.js";
+import { sendMessage } from "./src/handlers/messaging.js";
 
 chrome.storage.onChanged.addListener( function(changes, area) {
     if (area === 'managed') {
@@ -17,11 +18,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 chrome.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
     try {
         if (changeInfo.status === 'complete' && await isTabSafeStorage(tab)) {
-            console.log(`Injecting script to ${tab.url}...`)
+            console.log(`Injecting script to ${ tab.url }...`)
             await chrome.scripting.executeScript({
                 files: ['./src/content_scripts/clipboard.js'],
                 target: { tabId: tabId }
             })
+            if (chrome.runtime.lastError)
+                console.error(`Cannot inject content script: ${ chrome.runtime.lastError.message }`)
         }
     }
     catch (e) {
@@ -34,8 +37,7 @@ chrome.webRequest.onBeforeRequest.addListener(
     { urls: ["<all_urls>"] },
     [ "requestBody", "extraHeaders" ]
 )
-
-console.dir(navigator);
+// sendMessage({ text: "Hello, World!" });
 
 /* navigator.clipboard.addEventListener('copy', function() {
     console.log("Caught copy event in worker");

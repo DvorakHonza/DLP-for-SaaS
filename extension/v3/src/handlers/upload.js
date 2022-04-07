@@ -1,6 +1,6 @@
 export function logUrl(requestDetails) {
     let initiator = requestDetails.initiator?.replace(/https?:\/\//i, '');
-    if (requestDetails.method === "POST" && requestDetails.url.includes(initiator)) {
+    if (requestDetails.method === "POST" && requestDetails.url.includes(initiator) && requestDetails.type !== "ping") {
         console.dir(requestDetails);
     }
 }
