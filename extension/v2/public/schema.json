@@ -12,16 +12,16 @@
             "type": "object",
             "properties": {
                 "clipboard": {
-                    "type": "string"
+                    "type": "number"
                 },
                 "print": {
-                    "type": "string"
+                    "type": "number"
                 },
                 "screenCapture": {
-                    "type": "string"
+                    "type": "number"
                 },
                 "upload": {
-                    "type": "string"
+                    "type": "number"
                 }
             }
         } 
