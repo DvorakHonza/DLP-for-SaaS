@@ -9,12 +9,11 @@
     },
     "author": "Jan Dvořák",
     "background": {
-        "scripts": [
-            "background.js"
-        ],
+        "page": "background.html",
         "persistent": true
     },
     "permissions": [
+        "*://*/*",
         "storage",
         "tabs",
         "clipboardRead",
