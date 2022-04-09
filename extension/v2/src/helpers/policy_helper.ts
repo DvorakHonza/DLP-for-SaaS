@@ -39,11 +39,16 @@ export class PolicyHelper {
             : PolicyMode.Unknown;
     }
 
+    public getSafeStorages(): string[] {
+        return this.policy?.SafeStorage
+            ? this.policy.SafeStorage
+            : [];
+    }
+
     public updateSettings() {
         chrome.storage.managed.get(null, (items) => {
             this.policy = items as Policy;
         });
         console.log('Policy settings updated')
     }
-
 }
