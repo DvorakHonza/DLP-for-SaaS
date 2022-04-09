@@ -1,5 +1,8 @@
+import { MessageType } from '../enums/message_type';
+import { OperationType } from '../enums/operation_type';
 import { PolicyMode } from '../enums/policy_mode';
 import { PolicyHelper } from '../helpers/policy_helper';
+import { sendNativeMessage } from './nativeMessaging';
 
 export async function onCopyHandler(
     request: any,
@@ -12,6 +15,23 @@ export async function onCopyHandler(
         console.log('Blocking copy');
         setClipboardContent('Copy blocked');
     }
+
+    chrome.identity.getProfileUserInfo(
+        (userInfo: chrome.identity.UserInfo) => {
+            sendNativeMessage({
+                timestamp: new Date(),
+                type: MessageType.DLP,
+                operation: OperationType.ClipboardCopy,
+                userEmail: userInfo.email,
+                userId: userInfo.id,
+                url: sender.url,
+                data: getClipboardContent()
+            });
+        }
+    );
+
+    //TODO: Send message to native host
+
     return true;
 }
 

@@ -1,10 +1,12 @@
+import { PolicyHelper } from "./policy_helper";
+
 export async function injectClipboardContentScript(
     tabId: number,
     changeInfo: chrome.tabs.TabChangeInfo,
     tab: chrome.tabs.Tab
 ) {
     try {
-        if (changeInfo.status === 'complete') {
+        if (shouldInject(changeInfo, tab)) {
             console.log(`Injecting script to ${ tab.url }...`);
             chrome.tabs.executeScript(
                 tabId,
@@ -22,4 +24,13 @@ export async function injectClipboardContentScript(
     catch (e) {
         console.error(`Error ocurred while injecting script to ${ tab.url }: ${ e }`);
     }
+}
+
+function shouldInject(changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): boolean {
+    let safeStorages = PolicyHelper.getInstance().getSafeStorages();
+    let isSafeStorage = safeStorages
+        .map(value => tab.url?.includes(value))
+        .some( value => value);
+
+    return changeInfo.status === 'complete' && isSafeStorage;
 }
