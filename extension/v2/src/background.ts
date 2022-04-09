@@ -1,24 +1,17 @@
-chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse) {
-        console.log("Received message");
-        console.dir(request);
-        return true;
-    }
+import { onMessageHandler } from './handlers/messaging';
+import { PolicyHelper } from './helpers/policy_helper';
+import { injectClipboardContentScript } from './helpers/script_injector';
+
+// Fetch policy settings from storage
+PolicyHelper.getInstance();
+
+// Storage handlers
+chrome.storage.onChanged.addListener((_changes, areaName) => 
+    areaName === 'managed' && PolicyHelper.getInstance().updateSettings()
 );
 
-chrome.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
-    try {
-        if (changeInfo.status === 'complete') {
-            console.log(`Injecting script to ${ tab.url }...`);
-            await chrome.scripting.executeScript({
-                files: ['./src/content_scripts/clipboard.js'],
-                target: { tabId: tabId }
-            });
-            if (chrome.runtime.lastError)
-                console.error(`Cannot inject content script: ${ chrome.runtime.lastError.message }`);
-        }
-    }
-    catch (e) {
-        console.error(`Error ocurred while injecting script to ${ tab.url }: ${ e }`);
-    }
-});
+// Messaging handlers
+chrome.runtime.onMessage.addListener(onMessageHandler);
+
+//Injecting hadlers
+chrome.tabs.onUpdated.addListener(injectClipboardContentScript);
