@@ -8,6 +8,7 @@ module.exports = {
    output: {
       path: path.join(__dirname, "../dist"),
       filename: "[name].js",
+      clean: true,
    },
    resolve: {
       extensions: [".ts", ".js"],
