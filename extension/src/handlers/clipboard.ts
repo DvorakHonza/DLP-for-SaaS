@@ -9,7 +9,8 @@ export async function onCopyHandler(
     sender: chrome.runtime.MessageSender,
     sendResponse: (response?: any) => void
 ) {
-    let clipboardPolicy = PolicyHelper.getInstance().getStoragePolicy('clipboard');
+    let clipboardPolicy = PolicyHelper.getStoragePolicy('clipboard');
+    let clipboardContent = getClipboardContent();
     console.log('Copying to clipboard detected');
     if (clipboardPolicy === PolicyMode.Block) {
         console.log('Blocking copy');
@@ -25,12 +26,12 @@ export async function onCopyHandler(
                 userEmail: userInfo.email,
                 userId: userInfo.id,
                 url: sender.url,
-                data: getClipboardContent()
+                data: clipboardContent
             });
         }
     );
 
-    //TODO: Send message to native host
+    //TODO: Create notification
 
     return true;
 }
@@ -54,6 +55,7 @@ function setClipboardContent(text?: string): void {
     textArea.value = text ? text : '';
     textArea.focus();
     textArea.select();
-    var successful = document.execCommand('copy');
-    console.log(`Clipboard content${successful ? ' ' : 'not '}set`)
+    if (!document.execCommand('copy'))
+        console.log('Could not set clipboard content')
+
 }

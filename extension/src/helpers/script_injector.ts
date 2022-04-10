@@ -27,7 +27,7 @@ export async function injectClipboardContentScript(
 }
 
 function shouldInject(changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): boolean {
-    let safeStorages = PolicyHelper.getInstance().getSafeStorages();
+    let safeStorages = PolicyHelper.getSafeStorages();
     let isSafeStorage = safeStorages
         .map(value => tab.url?.includes(value))
         .some( value => value);

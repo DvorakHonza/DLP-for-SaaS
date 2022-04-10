@@ -12,40 +12,33 @@ type Policy = {
 
 export class PolicyHelper {
 
-    private policy: Policy | undefined;
-    private static instance: PolicyHelper | undefined;
+    private static policy: Policy | undefined;
 
-    private constructor() {
+    public static init(): void {
+        console.log('Waiting for settings...');
         chrome.storage.managed.get(null, (items) => {
             this.policy = items as Policy;
+            console.log('Policy settings set');
         });
     }
 
-    public static getInstance(): PolicyHelper {
-        if (!this.instance) {
-            this.instance = new PolicyHelper(); 
-            console.log('Creating new PolicyHelper instance');
-        }
-        return this.instance;
-    }
-
-    public getAllPolicies(): Policy | undefined {
+    public static getAllPolicies(): Policy | undefined {
         return this.policy;
     }
 
-    public getStoragePolicy(policy: keyof Policy["StoragePolicySettings"]): PolicyMode {
+    public static getStoragePolicy(policy: keyof Policy["StoragePolicySettings"]): PolicyMode {
         return this.policy?.StoragePolicySettings
             ? this.policy.StoragePolicySettings[policy]
             : PolicyMode.Unknown;
     }
 
-    public getSafeStorages(): string[] {
+    public static getSafeStorages(): string[] {
         return this.policy?.SafeStorage
             ? this.policy.SafeStorage
             : [];
     }
 
-    public updateSettings() {
+    public static updateSettings() {
         chrome.storage.managed.get(null, (items) => {
             this.policy = items as Policy;
         });

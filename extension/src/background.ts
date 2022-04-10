@@ -3,11 +3,11 @@ import { PolicyHelper } from './helpers/policy_helper';
 import { injectClipboardContentScript } from './helpers/script_injector';
 
 // Fetch policy settings from storage
-PolicyHelper.getInstance();
+PolicyHelper.init();
 
 // Storage handlers
 chrome.storage.onChanged.addListener((_changes, areaName) => 
-    areaName === 'managed' && PolicyHelper.getInstance().updateSettings()
+    areaName === 'managed' && PolicyHelper.updateSettings()
 );
 
 // Messaging handlers
