@@ -1,5 +1,5 @@
-import { MessageType } from "../enums/message_type";
-import { OperationType } from "../enums/operation_type"
+import { MessageType } from "../enums/MessageType";
+import { OperationType } from "../enums/OperationType"
 import { onCopyHandler } from "./clipboard";
 
 type Message = {

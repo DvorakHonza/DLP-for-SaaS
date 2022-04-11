@@ -1,4 +1,4 @@
-import { PolicyHelper } from "./policy_helper";
+import { PolicyHelper } from "./PolicHelper";
 
 export async function injectClipboardContentScript(
     tabId: number,

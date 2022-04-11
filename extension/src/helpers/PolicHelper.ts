@@ -1,4 +1,4 @@
-import { PolicyMode } from "../enums/policy_mode";
+import { PolicyMode } from "../enums/PolicyMode";
 
 type Policy = {
     SafeStorage: string[];
