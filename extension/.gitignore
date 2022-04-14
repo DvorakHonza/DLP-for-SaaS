@@ -39,3 +39,7 @@ dist/**/*
 
 # ignore yarn.lock
 yarn.lock
+
+# Ignore packaged extensions
+*.crx
+*.pem
