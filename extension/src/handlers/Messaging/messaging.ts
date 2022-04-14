@@ -1,6 +1,6 @@
-import { MessageType } from "../../enums/MessageType";
-import { OperationType } from "../../enums/OperationType"
-import { onCopyHandler } from "../Clipboard/Clipboard";
+import { MessageType } from '../../Enums/MessageType';
+import { OperationType } from '../../Enums/OperationType'
+import { onCopyHandler } from '../Clipboard/Clipboard';
 
 type Message = {
     script: string;
@@ -21,12 +21,12 @@ export function onMessageHandler(
     sender: chrome.runtime.MessageSender,
     sendResponse: (response?: any) => void
 ) {
-    console.log(`Received message${sender.url ? ` from content script ${request.script}` : ""}`);
+    console.log(`Received message${sender.url ? ` from content script ${request.script}` : ''}`);
     let handler = handlers[request.script];
     handler(request, sender, sendResponse);
-    console.log("Message handler finished");
+    console.log('Message handler finished');
 }
 
 const handlers: MessageHandlers = {
-    "clipboard.js": onCopyHandler,
+    'clipboard.js': onCopyHandler,
 }

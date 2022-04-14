@@ -1,6 +1,6 @@
-import { MessageType } from '../../enums/MessageType';
-import { OperationType } from '../../enums/OperationType';
-import { PolicyMode } from '../../enums/PolicyMode';
+import { MessageType } from '../../Enums/MessageType';
+import { OperationType } from '../../Enums/OperationType';
+import { PolicyMode } from '../../Enums/PolicyMode';
 import { PolicyHelper } from '../../helpers/PolicHelper';
 import { sendNativeMessage } from '../Messaging/NativeMessaging';
 

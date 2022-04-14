@@ -1,4 +1,4 @@
-import { PolicyHelper } from "./PolicHelper";
+import { PolicyHelper } from "./PolicyHelper";
 
 const safeStorageScripts = ['clipboard.js', 'screenCapture.js'];
 

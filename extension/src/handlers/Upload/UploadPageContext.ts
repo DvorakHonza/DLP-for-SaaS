@@ -1,5 +1,5 @@
-import { PolicyMode } from "../../enums/PolicyMode";
-import { PolicyHelper } from "../../helpers/PolicHelper";
+import { PolicyMode } from "../../Enums/PolicyMode";
+import { PolicyHelper } from "../../Helpers/PolicyHelper";
 import { UloztoPage } from "./UploadPages/UloztoPage";
 import { UschovnaPage } from "./UploadPages/UschovnaPage";
 
