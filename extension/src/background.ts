@@ -5,8 +5,8 @@ import {
     setUploadPageContext,
     setUploadPageContextOnTabChange
 } from './handlers/Upload/Upload';
-import { PolicyHelper } from './helpers/PolicHelper';
-import { injectToSafeStorageTab } from './helpers/ScriptInjector';
+import { PolicyHelper } from './Helpers/PolicyHelper';
+import { injectToSafeStorageTab } from './Helpers/ScriptInjector';
 
 // Fetch policy settings from storage
 PolicyHelper.init();
