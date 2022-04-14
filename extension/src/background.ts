@@ -1,6 +1,12 @@
-import { onMessageHandler } from './handlers/messaging';
-import { PolicyHelper } from './helpers/policy_helper';
-import { injectClipboardContentScript } from './helpers/script_injector';
+import { onMessageHandler } from './handlers/Messaging/messaging';
+import {
+    clearUploadPageContext,
+    processWebRequest,
+    setUploadPageContext,
+    setUploadPageContextOnTabChange
+} from './handlers/Upload/Upload';
+import { PolicyHelper } from './helpers/PolicHelper';
+import { injectToSafeStorageTab } from './helpers/ScriptInjector';
 
 // Fetch policy settings from storage
 PolicyHelper.init();
@@ -13,5 +19,17 @@ chrome.storage.onChanged.addListener((_changes, areaName) =>
 // Messaging handlers
 chrome.runtime.onMessage.addListener(onMessageHandler);
 
-//Injecting hadlers
-chrome.tabs.onUpdated.addListener(injectClipboardContentScript);
+// Injecting hadlers    
+chrome.tabs.onUpdated.addListener(injectToSafeStorageTab);
+
+//Page context handlers
+chrome.tabs.onUpdated.addListener(setUploadPageContext);
+chrome.tabs.onActivated.addListener(setUploadPageContextOnTabChange);
+chrome.tabs.onRemoved.addListener(clearUploadPageContext)
+
+// WebRequest handlers
+chrome.webRequest.onBeforeRequest.addListener(
+    processWebRequest,
+    { urls:  ['<all_urls>']},
+    [ 'requestBody', 'blocking' ]
+);
