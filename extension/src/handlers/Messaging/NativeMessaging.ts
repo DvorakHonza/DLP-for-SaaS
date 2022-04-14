@@ -1,5 +1,5 @@
-import { MessageType } from "../enums/MessageType";
-import { OperationType } from "../enums/OperationType";
+import { MessageType } from "../../enums/MessageType";
+import { OperationType } from "../../enums/OperationType";
 
 const nativeHostName = 'com.dlp_for_saas.native_host';
 Object.freeze(nativeHostName);

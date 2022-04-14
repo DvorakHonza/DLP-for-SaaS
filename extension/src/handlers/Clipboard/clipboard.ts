@@ -1,8 +1,8 @@
-import { MessageType } from '../enums/MessageType';
-import { OperationType } from '../enums/OperationType';
-import { PolicyMode } from '../enums/PolicyMode';
-import { PolicyHelper } from '../helpers/PolicHelper';
-import { sendNativeMessage } from './NativeMessaging';
+import { MessageType } from '../../enums/MessageType';
+import { OperationType } from '../../enums/OperationType';
+import { PolicyMode } from '../../enums/PolicyMode';
+import { PolicyHelper } from '../../helpers/PolicHelper';
+import { sendNativeMessage } from '../Messaging/NativeMessaging';
 
 export async function onCopyHandler(
     request: any,
