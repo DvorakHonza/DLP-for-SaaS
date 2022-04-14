@@ -21,7 +21,9 @@
         "clipboardRead",
         "clipboardWrite",
         "identity",
-        "identity.email"
+        "identity.email",
+        "webRequest",
+        "webRequestBlocking"
     ],
     "storage": {
         "managed_schema": "schema.json"
