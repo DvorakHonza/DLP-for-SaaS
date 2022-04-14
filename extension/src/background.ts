@@ -1,4 +1,4 @@
-import { onMessageHandler } from './handlers/Messaging/messaging';
+import { onMessageHandler } from './handlers/Messaging/Messaging';
 import {
     clearUploadPageContext,
     processWebRequest,

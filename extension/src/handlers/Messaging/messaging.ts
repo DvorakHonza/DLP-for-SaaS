@@ -1,6 +1,6 @@
 import { MessageType } from "../../enums/MessageType";
 import { OperationType } from "../../enums/OperationType"
-import { onCopyHandler } from "../Clipboard/clipboard";
+import { onCopyHandler } from "../Clipboard/Clipboard";
 
 type Message = {
     script: string;
