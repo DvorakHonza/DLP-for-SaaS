@@ -1,4 +1,6 @@
-export class UloztoPage implements IUploadPage {
+import { AbstractUploadPage } from "./AbstractUploadPage";
+
+export class UloztoPage extends AbstractUploadPage {
     public readonly UploadUrls: string[] = ['upload.uloz.to'];
     public readonly UploadMethod: string = 'POST';
     public Name: string = 'uloz.to';
@@ -19,9 +21,4 @@ export class UloztoPage implements IUploadPage {
     public logUpload(info: any) {
         throw new Error('Not implemented');
     };
-
-    public containsFileUpload(detail: chrome.webRequest.WebRequestBodyDetails): boolean {
-        return detail.method === this.UploadMethod &&
-            this.UploadUrls.some( url => detail.url.includes(url));
-    }
 }
