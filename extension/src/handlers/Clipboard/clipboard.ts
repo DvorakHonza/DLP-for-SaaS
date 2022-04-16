@@ -8,7 +8,7 @@ export async function onCopyHandler(
     request: any,
     sender: chrome.runtime.MessageSender,
     sendResponse: (response?: any) => void
-) {
+): Promise<boolean> {
     let clipboardPolicy = PolicyHelper.getStoragePolicy('clipboard');
     let clipboardContent = getClipboardContent();
     console.log('Copying to clipboard detected');
@@ -50,7 +50,7 @@ function getClipboardContent(): string {
     return result;
 }
 
-function setClipboardContent(text?: string): void {
+export function setClipboardContent(text?: string): void {
     var textArea = document.getElementById('sandbox') as HTMLTextAreaElement;
     textArea.value = text ? text : '';
     textArea.focus();

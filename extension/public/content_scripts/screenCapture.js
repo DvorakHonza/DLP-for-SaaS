@@ -1,4 +1,6 @@
 document.addEventListener('keyup', function(event){
     if (event.key === 'PrintScreen')
-        console.log('printscreen');
+        chrome.runtime.sendMessage(
+            { script: "screenCapture.js" },
+        );
 });

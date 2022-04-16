@@ -1,6 +1,7 @@
 import { MessageType } from '../../Enums/MessageType';
 import { OperationType } from '../../Enums/OperationType'
 import { onCopyHandler } from '../Clipboard/Clipboard';
+import { screenCaptureHandler } from '../ScreenCapture/ScreenCapture';
 
 type Message = {
     script: string;
@@ -29,4 +30,5 @@ export function onMessageHandler(
 
 const handlers: MessageHandlers = {
     'clipboard.js': onCopyHandler,
+    'screenCapture.js': screenCaptureHandler
 }
