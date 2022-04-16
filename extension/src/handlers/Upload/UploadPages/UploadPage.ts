@@ -1,22 +1,27 @@
-export abstract class AbstractUploadPage implements IUploadPage {
+export abstract class UploadPage implements IUploadPage {
     abstract readonly UploadUrls: string[];
     abstract readonly UploadMethod: string;
     abstract readonly Name: string;
 
     public blockUpload(): chrome.webRequest.BlockingResponse {
+        console.log('Blocking request');
         return {
             cancel: true,
         }
     };
+
     public notify() {
-        throw new Error('Not implemented');
+        console.log('Creating notification');
     };
+    
     public logUpload(info: any) {
-        throw new Error('Not implemented');
+        console.log('Creating log');
     };
 
-    containsFileUpload(detail: chrome.webRequest.WebRequestBodyDetails) {
+    public containsFileUpload(detail: chrome.webRequest.WebRequestBodyDetails) {
         return detail.method === this.UploadMethod &&
             this.UploadUrls.some( url => detail.url.includes(url));
     };
+
+    public abstract getUploadData(detail: chrome.webRequest.WebRequestBodyDetails): string;
 }

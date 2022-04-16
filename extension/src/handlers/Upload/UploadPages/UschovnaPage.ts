@@ -1,19 +1,11 @@
-import { AbstractUploadPage } from "./AbstractUploadPage";
+import { UploadPage } from "./UploadPage";
 
-export class UschovnaPage extends AbstractUploadPage {
+export class UschovnaPage extends UploadPage {
     UploadUrls: string[] = ['uschovna.cz/ajax/ajax_upload/'];
     UploadMethod: string = 'POST';
     Name: string = 'uschovna.cz';
 
-    blockUpload = () => {
-        throw new Error('Not implemented');
-    };
-
-    notify = () => {
-        throw new Error('Not implemented');
-    };
-
-    logUpload = (info: any) => {
-        throw new Error('Not implemented');
-    };
+    public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails): string {
+        return '';
+    }
 }

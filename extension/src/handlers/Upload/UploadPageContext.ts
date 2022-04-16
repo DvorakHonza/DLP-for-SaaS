@@ -51,10 +51,11 @@ export class UploadPageContext {
     }
 
     public executeAction() {
+        let action: void | chrome.webRequest.BlockingResponse;
         switch(this.uploadPolicy) {
             case PolicyMode.Block:
-                this.page.blockUpload();
-
+                action = this.page.blockUpload();
+            
             case PolicyMode.Notify:
                 this.page.notify();
             
@@ -65,6 +66,7 @@ export class UploadPageContext {
             case PolicyMode.Unknown:
                 console.log('Invalid upload policy value set. No action taken.')
         }
+        return action;
     }
 
     private getPageContext(url: string): IUploadPage {

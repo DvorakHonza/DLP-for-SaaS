@@ -1,6 +1,4 @@
 import { UploadPageContext } from "./UploadPageContext";
-import { UloztoPage } from "./UploadPages/UloztoPage";
-import { UschovnaPage } from "./UploadPages/UschovnaPage";
 
 const supportedUploadPages = ['uloz.to', 'www.uschovna.cz'];
 
@@ -12,6 +10,7 @@ export function processWebRequest(
     try {
         if (requestProcessor.containsFileUpload(detail)) {
             console.dir(detail);
+            return requestProcessor.executeAction();
         }
     }
     catch(e) {}
@@ -22,10 +21,8 @@ export function setUploadPageContext(
     changeInfo: chrome.tabs.TabChangeInfo,
     tab: chrome.tabs.Tab
 ): void {
-    console.log(tabId);
     if (tab.status === 'complete') {
         let url = getTabUrl(tab.url);
-        console.log(url);
         if (url && supportedUploadPages.includes(url)) {
             requestProcessor.setUploadPage(tabId, url);
         }
@@ -39,19 +36,6 @@ export function setUploadPageContextOnTabChange(activeInfo: chrome.tabs.TabActiv
 export function clearUploadPageContext(tabId: number, removeInfo: object) {
     requestProcessor.removeUploadPageContext(tabId);
 }
-
-/* function setUploadPage(tabId: number, url: string) {
-    console.log('Setting upload page');
-    if (url === 'uloz.to') {
-        requestProcessor.setUploadPage(tabId, new UloztoPage());
-    }
-    else if (url === 'www.uschovna.cz') {
-        requestProcessor.setUploadPage(tabId, new UschovnaPage());
-    }
-    else {
-        console.error(`Unsupported upload page: ${url}`);
-    }
-} */
 
 function getTabUrl(tabUrl: string | undefined) {
 
