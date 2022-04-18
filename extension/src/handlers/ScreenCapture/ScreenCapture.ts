@@ -12,23 +12,17 @@ export function screenCaptureHandler(
 ): boolean | Promise<boolean> {
     let clipboardPolicy = PolicyHelper.getStoragePolicy('screenCapture');
     console.log('Taking clipboard detected');
+    
     if (clipboardPolicy === PolicyMode.Block) {
         console.log('Taking screenshot blocked');
         setClipboardContent();
     }
 
-    chrome.identity.getProfileUserInfo(
-        (userInfo: chrome.identity.UserInfo) => {
-            sendNativeMessage({
-                timestamp: new Date(),
-                type: MessageType.DLP,
-                operation: OperationType.ScreenCapture,
-                userEmail: userInfo.email,
-                userId: userInfo.id,
-                url: sender.url,
-            });
-        }
-    );
+    sendNativeMessage({
+        type: MessageType.DLP,
+        operation: OperationType.ScreenCapture,
+        url: sender.url,
+    });
 
     return true;
 }
