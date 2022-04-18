@@ -6,5 +6,21 @@
     "extDescription": {
         "message": "Provides data loss prevention for data stored in SaaS services.",
         "description": "Extension description"
+    },
+    "blockNotificationTitle": {
+        "message": "",
+        "description": "Title for notification in block mode"
+    },
+    "notifyNotificationTitle": {
+        "message": "Choose an action for this operation",
+        "description": "Title for notification in notify mode"
+    },
+    "uploadNotificationMessage": {
+        "message": "Unauthorized file upload detected",
+        "description": "Most prominent title of the notification of upload operation"
+    },
+    "printNotificationMessage": {
+        "message": "Unauthorized printing detected",
+        "description": "Most prominent title of the notification of print operation"
     }
 }
