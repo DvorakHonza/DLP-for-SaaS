@@ -1,6 +1,7 @@
 import { MessageType } from "../../../Enums/MessageType";
 import { OperationType } from "../../../Enums/OperationType";
 import { PolicyMode } from "../../../Enums/PolicyMode";
+import { NotificationsHelper } from "../../../Helpers/NotificationsHelper";
 import { IDlpOperationHandler } from "../../IDlpOperationHandler"
 import { sendNativeMessage } from "../../Messaging/NativeMessaging";
 
@@ -33,13 +34,13 @@ export abstract class UploadPage implements IDlpOperationHandler {
 
     public blockOperation(request: chrome.webRequest.WebRequestBodyDetails, mode: PolicyMode): chrome.webRequest.BlockingResponse {
         console.log('Blocking request');
-        this.createNotification();
+        this.createNotification(mode);
         this.sendLog(request);
         return this.CancelResponse;
     }
     
     public notify(request: chrome.webRequest.WebRequestBodyDetails, mode: PolicyMode): void | chrome.webRequest.BlockingResponse {
-        this.createNotification();
+        this.createNotification(mode);
         this.sendLog(request);
     }
     
@@ -47,8 +48,8 @@ export abstract class UploadPage implements IDlpOperationHandler {
         this.sendLog(request);
     }
 
-    protected createNotification() {
-        console.log('Creating notification.');
+    protected createNotification(mode: PolicyMode) {
+        NotificationsHelper.showNotification(mode, OperationType.Upload);
     }
 
     protected sendLog(request: chrome.webRequest.WebRequestBodyDetails) {

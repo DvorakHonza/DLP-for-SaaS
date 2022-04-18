@@ -16,7 +16,9 @@ export function processWebRequest(
             return requestProcessor.executeAction(detail);
         }
     }
-    catch(e) {}
+    catch(e) {
+        console.error(e);
+    }
 }
 
 export function setUploadPageContext(
