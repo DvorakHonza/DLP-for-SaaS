@@ -12,24 +12,18 @@ export async function onCopyHandler(
     let clipboardPolicy = PolicyHelper.getStoragePolicy('clipboard');
     let clipboardContent = getClipboardContent();
     console.log('Copying to clipboard detected');
+    
     if (clipboardPolicy === PolicyMode.Block) {
         console.log('Blocking copy');
         setClipboardContent('Copy blocked');
     }
 
-    chrome.identity.getProfileUserInfo(
-        (userInfo: chrome.identity.UserInfo) => {
-            sendNativeMessage({
-                timestamp: new Date(),
-                type: MessageType.DLP,
-                operation: OperationType.ClipboardCopy,
-                userEmail: userInfo.email,
-                userId: userInfo.id,
-                url: sender.url,
-                data: clipboardContent
-            });
-        }
-    );
+    sendNativeMessage({
+        type: MessageType.DLP,
+        operation: OperationType.ClipboardCopy,
+        url: sender.url,
+        data: clipboardContent
+    });
 
     //TODO: Create notification
 

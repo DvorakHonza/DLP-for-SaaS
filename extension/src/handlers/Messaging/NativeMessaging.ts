@@ -1,16 +1,14 @@
-import { MessageType } from "../../Enums/MessageType";
-import { OperationType } from "../../Enums/OperationType";
+import { MessageType } from '../../Enums/MessageType';
+import { OperationType } from '../../Enums/OperationType';
+import { PolicyMode } from '../../Enums/PolicyMode';
 
 const nativeHostName = 'com.dlp_for_saas.native_host';
 Object.freeze(nativeHostName);
 
 export type NativeMessage = {
-    timestamp: Date;
     type: MessageType;
     operation: OperationType;
-    userEmail: string;
-    userId: string;
-    actionTaken?: void;
+    actionTaken?: PolicyMode.Block | PolicyMode.Log;
     url?: string;
     data?: any;
 }
@@ -33,9 +31,9 @@ function connectNativeHost() {
 export function sendNativeMessage(message: NativeMessage) {
     if (!port)
         connectNativeHost();
+    
     console.log('Sending message:');
-    console.dir(message);
-    port?.postMessage(message);
+    prepareAndSendMessage(message);
 }
 
 
@@ -48,4 +46,18 @@ function onPortDisconnect(port: chrome.runtime.Port) {
     chrome.runtime.lastError
     ? console.error(`Connection to crashed: ${chrome.runtime.lastError.message}`)
     : console.log(`Connection closed by ${port.name}`);
+}
+
+function prepareAndSendMessage(message: NativeMessage) {
+    chrome.identity.getProfileUserInfo(
+        (userInfo: chrome.identity.UserInfo) => {
+            port?.postMessage({
+                timestamp: new Date(),
+                userEmail: userInfo.email,
+                userId: userInfo.id,
+                ...message,
+            });
+            console.log('Message sent');
+        }
+    );
 }
