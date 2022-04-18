@@ -8,19 +8,27 @@
         "description": "Extension description"
     },
     "blockNotificationTitle": {
-        "message": "",
+        "message": "Operation was blocked in accordance with security policy.",
         "description": "Title for notification in block mode"
     },
     "notifyNotificationTitle": {
-        "message": "Choose an action for this operation",
+        "message": "Choose an action for this operation.",
         "description": "Title for notification in notify mode"
     },
     "uploadNotificationMessage": {
         "message": "Unauthorized file upload detected",
-        "description": "Most prominent title of the notification of upload operation"
+        "description": "Most prominent title of the notification of upload operation."
     },
     "printNotificationMessage": {
         "message": "Unauthorized printing detected",
-        "description": "Most prominent title of the notification of print operation"
+        "description": "Most prominent title of the notification of print operation."
+    },
+    "proceedButtonTitle": {
+        "message": "Proceed",
+        "description": "Title of the proceed button in notification of Notify mode."
+    },
+    "cancelButtonTitle": {
+        "message": "Cancel",
+        "description": "Title of the cancel button in notification of Notify mode."
     }
 }

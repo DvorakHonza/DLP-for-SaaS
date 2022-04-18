@@ -6,5 +6,29 @@
     "extDescription": {
         "message": "Poskytuje ochranu proti ztrátě dat uložených v cloudových úložištích.",
         "description": "Extension description"
+    },
+    "blockNotificationTitle": {
+        "message": "Operace byla zablokována v souladu s bezpečnostní politikou.",
+        "description": "Title for notification in block mode"
+    },
+    "notifyNotificationTitle": {
+        "message": "Vyberte akci pro tuto operaci.",
+        "description": "Title for notification in notify mode"
+    },
+    "uploadNotificationMessage": {
+        "message": "Detekováno nebezpečné nahrávání souboru.",
+        "description": "Most prominent title of the notification of upload operation."
+    },
+    "printNotificationMessage": {
+        "message": "Detekován neautorizovaný tisk souboru.",
+        "description": "Most prominent title of the notification of print operation."
+    },
+    "proceedButtonTitle": {
+        "message": "Pokračovat",
+        "description": "Title of the proceed button in notification of Notify mode."
+    },
+    "cancelButtonTitle": {
+        "message": "Zrušit",
+        "description": "Title of the cancel button in notification of Notify mode."
     }
 }
