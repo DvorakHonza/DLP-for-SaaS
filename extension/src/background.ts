@@ -1,6 +1,7 @@
 import { onMessageHandler } from './handlers/Messaging/Messaging';
 import {
     clearUploadPageContext,
+    initRequestProcessor,
     processWebRequest,
     setUploadPageContext,
     setUploadPageContextOnTabChange
@@ -9,7 +10,9 @@ import { PolicyHelper } from './Helpers/PolicyHelper';
 import { injectToSafeStorageTab } from './Helpers/ScriptInjector';
 
 // Fetch policy settings from storage
-PolicyHelper.init();
+PolicyHelper.init(() => {
+    initRequestProcessor();
+});
 
 // Storage handlers
 chrome.storage.onChanged.addListener((_changes, areaName) => 
