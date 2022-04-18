@@ -1,20 +1,21 @@
 import { PolicyMode } from "../../Enums/PolicyMode";
 import { PolicyHelper } from "../../Helpers/PolicyHelper";
 import { UloztoPage } from "./UploadPages/UloztoPage";
+import { UploadPage } from "./UploadPages/UploadPage";
 import { UschovnaPage } from "./UploadPages/UschovnaPage";
 
 type TabPageContenxtDictionary = {
-    [tabId: number]: IUploadPage;
+    [tabId: number]: UploadPage;
 }
 
 export class UploadPageContext {
-    private page: IUploadPage;
+    private page: UploadPage;
     private uploadPolicy: PolicyMode;
 
     private pageContexts: TabPageContenxtDictionary;
 
     constructor() {
-        this.page = { } as IUploadPage;
+        this.page = { } as UploadPage;
         this.uploadPolicy = PolicyHelper.getStoragePolicy('upload');
         this.pageContexts = { };
     }
@@ -50,26 +51,11 @@ export class UploadPageContext {
         return this.page.containsFileUpload(detail);
     }
 
-    public executeAction() {
-        let action: void | chrome.webRequest.BlockingResponse;
-        switch(this.uploadPolicy) {
-            case PolicyMode.Block:
-                action = this.page.blockUpload();
-            
-            case PolicyMode.Notify:
-                this.page.notify();
-            
-            case PolicyMode.Log:
-                this.page.logUpload('');
-                break;
-
-            case PolicyMode.Unknown:
-                console.log('Invalid upload policy value set. No action taken.')
-        }
-        return action;
+    public executeAction(request: chrome.webRequest.WebRequestBodyDetails) {
+        return this.page.processRequest(request, this.uploadPolicy);
     }
 
-    private getPageContext(url: string): IUploadPage {
+    private getPageContext(url: string): UploadPage {
         console.log(`Creating upload page context for ${url}`);
         if (url === 'uloz.to')
             return new UloztoPage();

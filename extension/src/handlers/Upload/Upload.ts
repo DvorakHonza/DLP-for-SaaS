@@ -2,15 +2,18 @@ import { UploadPageContext } from "./UploadPageContext";
 
 const supportedUploadPages = ['uloz.to', 'www.uschovna.cz'];
 
-let requestProcessor = new UploadPageContext();
+let requestProcessor: UploadPageContext;
+
+export function initRequestProcessor() {
+    requestProcessor = new UploadPageContext();
+}
 
 export function processWebRequest(
     detail: chrome.webRequest.WebRequestBodyDetails
 ): void | chrome.webRequest.BlockingResponse {
     try {
         if (requestProcessor.containsFileUpload(detail)) {
-            console.dir(detail);
-            return requestProcessor.executeAction();
+            return requestProcessor.executeAction(detail);
         }
     }
     catch(e) {}
@@ -23,9 +26,8 @@ export function setUploadPageContext(
 ): void {
     if (tab.status === 'complete') {
         let url = getTabUrl(tab.url);
-        if (url && supportedUploadPages.includes(url)) {
+        if (url && supportedUploadPages.includes(url))
             requestProcessor.setUploadPage(tabId, url);
-        }
     }
 }
 
@@ -38,7 +40,6 @@ export function clearUploadPageContext(tabId: number, removeInfo: object) {
 }
 
 function getTabUrl(tabUrl: string | undefined) {
-
     // remove scheme and trailing slash
     let res = tabUrl?.match(/^\w*:\/\/(.*)\/$/m);
     return res ? res[1] : undefined;

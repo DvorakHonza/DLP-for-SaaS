@@ -5,7 +5,7 @@ export class UschovnaPage extends UploadPage {
     UploadMethod: string = 'POST';
     Name: string = 'uschovna.cz';
 
-    public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails): string {
-        return '';
+    public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails): string[] {
+        return [];
     }
 }
