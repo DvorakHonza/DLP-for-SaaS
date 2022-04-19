@@ -49,7 +49,11 @@ export abstract class UploadPage implements IDlpOperationHandler {
     }
 
     protected createNotification(mode: PolicyMode) {
-        NotificationsHelper.showNotification(mode, OperationType.Upload);
+        let notifications = new NotificationsHelper();
+        notifications.showNotification(mode, OperationType.Upload);
+        if (mode == PolicyMode.Notify) {
+            // handle notification button click
+        }
     }
 
     protected sendLog(request: chrome.webRequest.WebRequestBodyDetails) {
