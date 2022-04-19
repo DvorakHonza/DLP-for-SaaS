@@ -17,18 +17,11 @@ export function screenCaptureHandler(
         setClipboardContent();
     }
 
-    chrome.identity.getProfileUserInfo(
-        (userInfo: chrome.identity.UserInfo) => {
-            sendNativeMessage({
-                timestamp: new Date(),
-                type: MessageType.DLP,
-                operation: OperationType.ScreenCapture,
-                userEmail: userInfo.email,
-                userId: userInfo.id,
-                url: sender.url,
-            });
-        }
-    );
+    sendNativeMessage({
+        type: MessageType.DLP,
+        operation: OperationType.ScreenCapture,
+        url: sender.url,
+    });
 
     return true;
 }
