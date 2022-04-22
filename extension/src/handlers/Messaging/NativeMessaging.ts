@@ -28,11 +28,10 @@ function connectNativeHost() {
     }
 }
 
-export function sendNativeMessage(message: NativeMessage) {
+export async function sendNativeMessage(message: NativeMessage) {
     if (!port)
         connectNativeHost();
     
-    console.log('Sending message:');
     prepareAndSendMessage(message);
 }
 
@@ -45,7 +44,7 @@ function onNativeMessage(message: any, port: chrome.runtime.Port) {
 function onPortDisconnect(port: chrome.runtime.Port) {
     chrome.runtime.lastError
     ? console.error(`Connection to crashed: ${chrome.runtime.lastError.message}`)
-    : console.log(`Connection closed by ${port.name}`);
+    : console.log(`Connection closed${port.name ?? ` by ${port.name}`}.`);
 }
 
 function prepareAndSendMessage(message: NativeMessage) {

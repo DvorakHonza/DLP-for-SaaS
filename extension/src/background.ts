@@ -28,11 +28,11 @@ chrome.tabs.onUpdated.addListener(injectToSafeStorageTab);
 //Page context handlers
 chrome.tabs.onUpdated.addListener(setUploadPageContext);
 chrome.tabs.onActivated.addListener(setUploadPageContextOnTabChange);
-chrome.tabs.onRemoved.addListener(clearUploadPageContext)
+chrome.tabs.onRemoved.addListener(clearUploadPageContext);
 
 // WebRequest handlers
 chrome.webRequest.onBeforeRequest.addListener(
     processWebRequest,
-    { urls:  ['<all_urls>']},
+    { urls: ['<all_urls>'] },
     [ 'requestBody', 'blocking' ]
 );

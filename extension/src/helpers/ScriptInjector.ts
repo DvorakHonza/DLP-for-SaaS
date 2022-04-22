@@ -38,7 +38,7 @@ function shouldInject(changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Ta
     let safeStorages = PolicyHelper.getSafeStorages();
     let isSafeStorage = safeStorages
         .map(value => tab.url?.includes(value))
-        .some( value => value);
+        .some(value => value);
 
     return changeInfo.status === 'complete' && isSafeStorage;
 }
