@@ -17,5 +17,8 @@
   "keywords": [],
   "author": "",
   "license": "MIT",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "buffer": "^6.0.3"
+  }
 }

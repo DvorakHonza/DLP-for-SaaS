@@ -1,5 +1,6 @@
 import { PolicyMode } from "../../Enums/PolicyMode";
 import { PolicyHelper } from "../../Helpers/PolicyHelper";
+import { GoogleDrivePage } from "./UploadPages/GoogleDrivePage";
 import { UloztoPage } from "./UploadPages/UloztoPage";
 import { UploadPage } from "./UploadPages/UploadPage";
 import { UschovnaPage } from "./UploadPages/UschovnaPage";
@@ -61,6 +62,8 @@ export class UploadPageContext {
             return new UloztoPage();
         else if (url === 'www.uschovna.cz')
             return new UschovnaPage();
+        else if (url === 'drive.google.com')
+            return new GoogleDrivePage();
         else
             throw new Error(`Upload page handler for ${url} is not available`);
     }

@@ -1,6 +1,6 @@
 import { UploadPageContext } from "./UploadPageContext";
 
-const supportedUploadPages = ['uloz.to', 'www.uschovna.cz'];
+const supportedUploadPages = ['uloz.to', 'www.uschovna.cz', 'drive.google.com'];
 
 let requestProcessor: UploadPageContext;
 
@@ -16,7 +16,9 @@ export function processWebRequest(
             return requestProcessor.executeAction(detail);
         }
     }
-    catch(e) {}
+    catch(e) {
+        console.error(e);
+    }
 }
 
 export function setUploadPageContext(
@@ -40,12 +42,10 @@ export function clearUploadPageContext(tabId: number, removeInfo: object) {
 }
 
 function getTabUrl(tabUrl: string | undefined) {
-    // remove scheme and trailing slash
-    let res = tabUrl?.match(/^\w*:\/\/(.*)\/$/m);
+    // remove scheme and everything after first slash
+    let res = tabUrl?.match(/^\w*:\/\/((\w|\.)*)\/?.*$/m);
     return res ? res[1] : undefined;
 }
-
-// gdrive clients6.google.com/upload/drive PUT
 
 // Chrome does not fully support request body
 // https://bugs.chromium.org/p/chromium/issues/detail?id=813285#c12

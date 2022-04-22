@@ -18,14 +18,14 @@ export class UloztoPage extends UploadPage {
         return super.blockOperation(request, mode);
     }
 
-    public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails): string[] {
+    public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails): string {
         let filePaths: string[] = [];
         detail.requestBody?.raw?.forEach(value => 
             value.file
             ? filePaths.push(value.file)
             : null
         );
-        return filePaths;
+        return filePaths.join(',');
     }
 
     private getBatchId(url: string): string {
