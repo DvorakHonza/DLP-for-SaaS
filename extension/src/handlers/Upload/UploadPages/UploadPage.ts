@@ -35,7 +35,6 @@ export abstract class UploadPage implements IDlpOperationHandler {
 
     public blockOperation(request: chrome.webRequest.WebRequestBodyDetails, mode: PolicyMode): chrome.webRequest.BlockingResponse {
         console.log('Blocking request');
-        console.log(request);
         this.createNotification();
         this.sendLog(request);
         return this.CancelResponse;
