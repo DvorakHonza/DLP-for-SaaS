@@ -1,7 +1,7 @@
 {
     "name": "com.dlp_for_saas.native_host",
     "description": "Native messaging host for Dlp for SaaS Chromium extension.",
-    "path": "C:\\Users\\jan.dvorak\\Documents\\DP\\code\\NativeHost\\x64\\Debug\\NativeHost.exe",
+    "path": "C:\\Users\\jan.dvorak\\Documents\\DP\\code\\NativeHost\\NativeHost\\bin\\Debug\\net5.0\\NativeHost.exe",
     "type": "stdio",
     "allowed_origins": [
         "chrome-extension://fbhjbmfopgnldhbkdldjcjanpcpmdnld/"
