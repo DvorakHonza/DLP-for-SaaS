@@ -11,6 +11,12 @@ export type NativeMessage = {
     actionTaken?: PolicyMode.Block | PolicyMode.Log;
     url?: string;
     data?: any;
+    filename?: string;
+}
+
+type ResponseMessage = {
+    Successful: boolean;
+    ErrorMessage?: string;
 }
 
 var port: chrome.runtime.Port | undefined;
@@ -19,6 +25,7 @@ function connectNativeHost() {
     console.log('Connecting to native host...');
     try {
         port = chrome.runtime.connectNative(nativeHostName);
+        port.name = 'NativeHostLogger';
         port.onMessage.addListener(onNativeMessage);
         port.onDisconnect.addListener(onPortDisconnect);
         console.log('Connecting successful');
@@ -36,22 +43,25 @@ export async function sendNativeMessage(message: NativeMessage) {
 }
 
 
-function onNativeMessage(message: any, port: chrome.runtime.Port) {
-    console.log(`Received message from ${port.name}:`);
-    console.dir(message);
+function onNativeMessage(message: ResponseMessage, port: chrome.runtime.Port) {
+    if (message.Successful)
+        console.log('Log was succesfully saved to database.');
+    else
+        console.warn(`Log was not saved due to an error: ${message.ErrorMessage}`)
 }
 
 function onPortDisconnect(port: chrome.runtime.Port) {
     chrome.runtime.lastError
-    ? console.error(`Connection to crashed: ${chrome.runtime.lastError.message}`)
+    ? console.error(`Connection to ${port.name} crashed: ${chrome.runtime.lastError.message}`)
     : console.log(`Connection closed${port.name ?? ` by ${port.name}`}.`);
+    console.log(port);
 }
 
 function prepareAndSendMessage(message: NativeMessage) {
     chrome.identity.getProfileUserInfo(
         (userInfo: chrome.identity.UserInfo) => {
             port?.postMessage({
-                timestamp: new Date(),
+                timestamp: new Date().toISOString(),
                 userEmail: userInfo.email,
                 userId: userInfo.id,
                 ...message,
