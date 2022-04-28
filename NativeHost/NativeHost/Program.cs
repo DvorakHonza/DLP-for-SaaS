@@ -1,4 +1,6 @@
-﻿using NativeHost.MessageHandlers;
+﻿using System.IO;
+using NativeHost.MessageHandlers;
+using NativeHost.Messages;
 
 namespace NativeHost
 {
@@ -6,8 +8,18 @@ namespace NativeHost
     {
         public static void Main()
         {
-            var message = MessageHelper.ReadMessage();
-            MessageHelper.WriteMessage(message);
+            while (true)
+            {
+                try
+                {
+                    Message message = MessageHelper.ReadMessage();
+                    MessageHelper.ProcessMessage(message);
+                }
+                catch (EndOfStreamException)
+                {
+                    break;
+                }
+            }
         }
     }
 }

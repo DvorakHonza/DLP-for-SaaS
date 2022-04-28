@@ -1,34 +1,62 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Text.Json;
+using Microsoft.Data.Sqlite;
+using NativeHost.Logging;
+using NativeHost.MessageHandlers.Messages;
 using NativeHost.Messages;
 
 namespace NativeHost.MessageHandlers
 {
     public static class MessageHelper
     {
+
         public static Message ReadMessage()
         {
             byte[] messageBytes;
-
-            using (var reader = new BinaryReader(Console.OpenStandardInput()))
+            var options = new JsonSerializerOptions
             {
+                PropertyNameCaseInsensitive = true
+            };
+
+            using (var reader = new BinaryReader(Console.OpenStandardInput(), Encoding.UTF8))
+            {
+
                 var length = reader.ReadInt32();
                 messageBytes = reader.ReadBytes(length);
             }
 
-            return JsonSerializer.Deserialize<Message>(System.Text.Encoding.UTF8.GetString(messageBytes));
+            return JsonSerializer.Deserialize<Message>(Encoding.UTF8.GetString(messageBytes), options);
+
         }
 
-        public static void WriteMessage(Message message)
+        public static void WriteMessage(ResponseMessage message)
         {
             var messageJson = JsonSerializer.Serialize(message);
-            var messageBytes = System.Text.Encoding.UTF8.GetBytes(messageJson);
+            var messageBytes = Encoding.UTF8.GetBytes(messageJson);
 
-            using (var writer = new BinaryWriter(Console.OpenStandardOutput()))
+            using var writer = new BinaryWriter(Console.OpenStandardOutput());
+            writer.Write(messageBytes.Length);
+            writer.Write(messageBytes);
+        }
+
+        public static void ProcessMessage(Message message)
+        {
+            bool result = false;
+            string errorMessage = string.Empty;
+            try
             {
-                writer.Write(messageBytes.Length);
-                writer.Write(messageBytes);
+                Logger.CreateLog(message, out result, out errorMessage);
+            }
+            catch(SqliteException e)
+            {
+                result = false;
+                errorMessage = e.Message;
+            }
+            finally
+            {
+                WriteMessage(new ResponseMessage(result, errorMessage));
             }
         }
     }
