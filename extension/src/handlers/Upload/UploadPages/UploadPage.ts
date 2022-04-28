@@ -59,7 +59,7 @@ export abstract class UploadPage implements IDlpOperationHandler {
             type: MessageType.DLP,
             operation: OperationType.Upload,
             url: request.url,
-            data: this.getUploadData(request),
+            ...this.getUploadData(request),
         });
     }
 
