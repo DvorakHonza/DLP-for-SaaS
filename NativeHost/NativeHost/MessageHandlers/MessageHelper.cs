@@ -2,7 +2,6 @@
 using System.IO;
 using System.Text;
 using System.Text.Json;
-using Microsoft.Data.Sqlite;
 using NativeHost.Logging;
 using NativeHost.MessageHandlers.Messages;
 using NativeHost.Messages;
@@ -11,7 +10,6 @@ namespace NativeHost.MessageHandlers
 {
     public static class MessageHelper
     {
-
         public static Message ReadMessage()
         {
             byte[] messageBytes;
@@ -47,9 +45,9 @@ namespace NativeHost.MessageHandlers
             string errorMessage = string.Empty;
             try
             {
-                Logger.CreateLog(message, out result, out errorMessage);
+                Logger.Instance.CreateLog(message, out result, out errorMessage);
             }
-            catch(SqliteException e)
+            catch(Exception e)
             {
                 result = false;
                 errorMessage = e.Message;

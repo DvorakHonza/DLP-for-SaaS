@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Text.Json;
 using Microsoft.Data.Sqlite;
 using NativeHost.Enums;
 using NativeHost.Exceptions;
@@ -6,12 +7,17 @@ using NativeHost.Messages;
 
 namespace NativeHost.Logging
 {
-    public class Logger
+    public class LoggerBase
     {
-        private static readonly string DbFileName = "DlpForSaas.db";
-        private static readonly string DbPath = @"C:\Program Files\DLP for SaaS";
+        private readonly string DbFileName = "DlpForSaas.db";
+        private string DbPath { get; }
 
-        public static void CreateLog(Message message, out bool successful, out string errorMessage)
+        public LoggerBase()
+        {
+            DbPath = GetDbPath();
+        }
+
+        public void CreateLog(Message message, out bool successful, out string errorMessage)
         {
             using var conn = new SqliteConnection($@"Data Source={Path.Combine(DbPath, DbFileName)}");
             conn.Open();
@@ -32,6 +38,39 @@ namespace NativeHost.Logging
             {
                 successful = false;
                 errorMessage = e.Message;
+            }
+        }
+
+        private static string GetDbPath()
+        {
+            using var reader = new StreamReader(new FileStream("settings.json", FileMode.Open));
+            var content = reader.ReadToEnd();
+            var data = JsonSerializer.Deserialize<DatabaseInfo>(content);
+            return data.DatabaseLocation;
+        }
+
+        private class DatabaseInfo
+        {
+            public string DatabaseLocation { get; set; }
+        }
+    }
+
+    public static class Logger
+    {
+        private static LoggerBase _instance;
+        public static LoggerBase Instance
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new LoggerBase();
+                }
+                return _instance;
+            }
+            set
+            {
+                _instance = value;
             }
         }
     }
