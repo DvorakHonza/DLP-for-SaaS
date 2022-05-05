@@ -42,10 +42,11 @@ function onNativeMessage(message: any, port: chrome.runtime.Port) {
     console.dir(message);
 }
 
-function onPortDisconnect(port: chrome.runtime.Port) {
+function onPortDisconnect(dc_port: chrome.runtime.Port) {
+    port = undefined;
     chrome.runtime.lastError
     ? console.error(`Connection to crashed: ${chrome.runtime.lastError.message}`)
-    : console.log(`Connection closed by ${port.name}`);
+    : console.log(`Connection closed by ${dc_port.name}`);
 }
 
 function prepareAndSendMessage(message: NativeMessage) {

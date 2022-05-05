@@ -4,23 +4,31 @@
         "description": "Extension name"
     },
     "extDescription": {
-        "message": "Poskytuje ochranu proti ztrátě dat uložených v cloudových úložištích.",
+        "message": "Poskytuje ochranu proti ztrátě dat uložených v cloudových úložištích",
         "description": "Extension description"
     },
     "blockNotificationTitle": {
-        "message": "Operace byla zablokována v souladu s bezpečnostní politikou.",
+        "message": "Operace byla zablokována v souladu s bezpečnostní politikou",
         "description": "Title for notification in block mode"
     },
     "notifyNotificationTitle": {
-        "message": "Vyberte akci pro tuto operaci.",
+        "message": "Vyberte akci pro tuto operaci",
         "description": "Title for notification in notify mode"
     },
     "uploadNotificationMessage": {
-        "message": "Detekováno nebezpečné nahrávání souboru.",
+        "message": "Detekováno nebezpečné nahrávání souboru",
         "description": "Most prominent title of the notification of upload operation."
     },
     "printNotificationMessage": {
-        "message": "Detekován neautorizovaný tisk souboru.",
+        "message": "Detekován neautorizovaný tisk souboru",
+        "description": "Most prominent title of the notification of print operation."
+    },
+    "clipboardNotificationMessage": {
+        "message": "Detekováno neautorizované kopírování do schránky",
+        "description": "Most prominent title of the notification of print operation."
+    },
+    "screenCaptureNotificationMessage": {
+        "message": "Detekováno neautorizované pořizování snímku obrazovky",
         "description": "Most prominent title of the notification of print operation."
     },
     "proceedButtonTitle": {

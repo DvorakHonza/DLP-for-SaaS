@@ -23,6 +23,14 @@
         "message": "Unauthorized printing detected",
         "description": "Most prominent title of the notification of print operation."
     },
+    "clipboardNotificationMessage": {
+        "message": "Unauthorized copying to clipboard detected",
+        "description": "Most prominent title of the notification of print operation."
+    },
+    "screenCaptureNotificationMessage": {
+        "message": "Unauthorized screen capturing detected",
+        "description": "Most prominent title of the notification of print operation."
+    },
     "proceedButtonTitle": {
         "message": "Proceed",
         "description": "Title of the proceed button in notification of Notify mode."

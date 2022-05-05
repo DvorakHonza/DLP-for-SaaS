@@ -16,7 +16,7 @@ export class UploadPageContext {
 
     constructor() {
         this.page = { } as UploadPage;
-        this.uploadPolicy = PolicyHelper.getStoragePolicy('upload');
+        this.uploadPolicy = PolicyMode.Notify; // PolicyHelper.getStoragePolicy('upload');
         this.pageContexts = { };
     }
 

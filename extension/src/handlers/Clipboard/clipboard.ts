@@ -25,8 +25,6 @@ export async function onCopyHandler(
         data: clipboardContent
     });
 
-    //TODO: Create notification
-
     return true;
 }
 
