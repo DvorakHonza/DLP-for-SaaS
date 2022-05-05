@@ -12,16 +12,22 @@ type TabPageContenxtDictionary = {
 export class UploadPageContext {
     private page: UploadPage;
     private uploadPolicy: PolicyMode;
+    private safeStorages: string[];
 
     private pageContexts: TabPageContenxtDictionary;
 
     constructor() {
         this.page = { } as UploadPage;
         this.uploadPolicy = PolicyHelper.getStoragePolicy('upload');
+        this.safeStorages = PolicyHelper.getSafeStorages();
         this.pageContexts = { };
     }
 
     public setUploadPage(tabId: number, page: string) {
+        if (this.safeStorages.includes(page)) {
+            console.log('This page is configured as a safe storage. Uploading will not be affected.');
+            return;
+        }
         if (!this.pageContexts[tabId]) {
             this.pageContexts[tabId] = this.getPageContext(page);
         }
@@ -34,7 +40,7 @@ export class UploadPageContext {
             console.log(`Page context switched to ${this.page.Name}`)
         }
         catch (e) {
-            console.error(`Could not swap page context. Context for tab ${tabId} does not exist.`);
+            console.warn(`Could not swap page context. Context for tab ${tabId} does not exist.`);
         }
     }
 
@@ -44,7 +50,7 @@ export class UploadPageContext {
             delete this.pageContexts[tabId];
         }
         catch (e) {
-            console.error(`Could not delete page context. Context for tab ${tabId} was never created.`);
+            console.warn(`Could not delete page context. Context for tab ${tabId} was never created.`);
         }
     }
 
