@@ -17,7 +17,8 @@ export function processWebRequest(
         }
     }
     catch(e) {
-        console.error(e);
+        if (!(e instanceof TypeError))
+            console.error(e);
     }
 }
 
