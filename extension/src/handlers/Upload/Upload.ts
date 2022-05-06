@@ -1,7 +1,5 @@
 import { UploadPageContext } from "./UploadPageContext";
 
-const supportedUploadPages = ['uloz.to', 'www.uschovna.cz', 'drive.google.com'];
-
 let requestProcessor: UploadPageContext;
 
 export function initRequestProcessor() {
@@ -29,7 +27,7 @@ export function setUploadPageContext(
 ): void {
     if (tab.status === 'complete') {
         let url = getTabUrl(tab.url);
-        if (url && supportedUploadPages.includes(url))
+        if (url)
             requestProcessor.setUploadPage(tabId, url);
     }
 }

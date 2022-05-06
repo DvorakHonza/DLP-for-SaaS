@@ -5,7 +5,7 @@ import { UloztoPage } from "./UploadPages/UloztoPage";
 import { UploadPage } from "./UploadPages/UploadPage";
 import { UschovnaPage } from "./UploadPages/UschovnaPage";
 
-type TabPageContenxtDictionary = {
+type TabPageContextDictionary = {
     [tabId: number]: UploadPage;
 }
 
@@ -14,13 +14,17 @@ export class UploadPageContext {
     private uploadPolicy: PolicyMode;
     private safeStorages: string[];
 
-    private pageContexts: TabPageContenxtDictionary;
+    private supportedUploadPages: Map<string, () => UploadPage> = new Map();
+
+    private pageContexts: TabPageContextDictionary;
 
     constructor() {
         this.page = { } as UploadPage;
         this.uploadPolicy = PolicyHelper.getStoragePolicy('upload');
         this.safeStorages = PolicyHelper.getSafeStorages();
         this.pageContexts = { };
+
+        this.initSupportedUploadPages();
     }
 
     public setUploadPage(tabId: number, page: string) {
@@ -28,8 +32,14 @@ export class UploadPageContext {
             console.log('This page is configured as a safe storage. Uploading will not be affected.');
             return;
         }
-        if (!this.pageContexts[tabId]) {
-            this.pageContexts[tabId] = this.getPageContext(page);
+        if (!this.pageContexts[tabId] || this.pageContexts[tabId].Name !== page) {
+            try {
+                this.pageContexts[tabId] && this.removeUploadPageContext(tabId);
+                this.pageContexts[tabId] = this.getNewPageContext(page);
+            }
+            catch (e) {
+                console.warn(`Cannot create upload context for ${page}. Page '${page}' is not supported.`);
+            }
         }
         this.page = this.pageContexts[tabId];
     }
@@ -37,7 +47,7 @@ export class UploadPageContext {
     public switchUploadPageContext(tabId: number) {
         try {
             this.page = this.pageContexts[tabId];
-            console.log(`Page context switched to ${this.page.Name}`)
+            console.log(`Page context switched to ${this.page.Name} in tab ${tabId}.`)
         }
         catch (e) {
             console.warn(`Could not swap page context. Context for tab ${tabId} does not exist.`);
@@ -62,15 +72,19 @@ export class UploadPageContext {
         return this.page.processRequest(request, this.uploadPolicy);
     }
 
-    private getPageContext(url: string): UploadPage {
-        console.log(`Creating upload page context for ${url}`);
-        if (url === 'uloz.to')
-            return new UloztoPage();
-        else if (url === 'www.uschovna.cz')
-            return new UschovnaPage();
-        else if (url === 'drive.google.com')
-            return new GoogleDrivePage();
+    private getNewPageContext(url: string): UploadPage {
+        let pageCreator: (() => UploadPage) | undefined = this.supportedUploadPages.get(url);
+        if (pageCreator) {
+            console.log(`Creating upload page context for ${url}`);
+            return pageCreator();
+        }
         else
             throw new Error(`Upload page handler for ${url} is not available`);
+    }
+
+    private initSupportedUploadPages() {
+        this.supportedUploadPages.set('uloz.to', () => new UloztoPage());
+        this.supportedUploadPages.set('www.uschovna.cz', () => new UschovnaPage());
+        this.supportedUploadPages.set('drive.google.com', () => new GoogleDrivePage());
     }
 }
