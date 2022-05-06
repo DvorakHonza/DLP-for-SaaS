@@ -47,7 +47,7 @@ function onNativeMessage(message: ResponseMessage, port: chrome.runtime.Port) {
     if (message.Successful)
         console.log('Log was succesfully saved to database.');
     else
-        console.warn(`Log was not saved due to an error: ${message.ErrorMessage}`)
+        console.error(`Log was not saved due to an error: ${message.ErrorMessage}`)
 }
 
 function onPortDisconnect(port: chrome.runtime.Port) {
@@ -59,6 +59,7 @@ function onPortDisconnect(port: chrome.runtime.Port) {
 
 function prepareAndSendMessage(message: NativeMessage) {
     chrome.identity.getProfileUserInfo(
+        { accountStatus: chrome.identity.AccountStatus.ANY },
         (userInfo: chrome.identity.UserInfo) => {
             port?.postMessage({
                 timestamp: new Date().toISOString(),
