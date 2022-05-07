@@ -25,7 +25,6 @@ export function onMessageHandler(
     console.log(`Received message${sender.url ? ` from content script ${request.script}` : ''}`);
     let handler = handlers[request.script];
     handler(request, sender, sendResponse);
-    console.log('Message handler finished');
 }
 
 const handlers: MessageHandlers = {
