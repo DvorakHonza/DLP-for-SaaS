@@ -3,7 +3,7 @@ import { OperationType } from "../../Enums/OperationType";
 import { PolicyMode } from "../../Enums/PolicyMode";
 import { PolicyHelper } from "../../Helpers/PolicyHelper";
 import { setClipboardContent } from "../Clipboard/Clipboard";
-import { sendNativeMessage } from "../Messaging/NativeMessaging";
+import { Messenger } from "../Messaging/NativeMessaging";
 
 export function screenCaptureHandler(
     request: any,
@@ -17,7 +17,7 @@ export function screenCaptureHandler(
         setClipboardContent();
     }
 
-    sendNativeMessage({
+    Messenger.sendNativeMessage({
         type: MessageType.DLP,
         operation: OperationType.ScreenCapture,
         url: sender.url,

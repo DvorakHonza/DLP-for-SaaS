@@ -2,7 +2,7 @@ import { MessageType } from '../../Enums/MessageType';
 import { OperationType } from '../../Enums/OperationType';
 import { PolicyMode } from '../../Enums/PolicyMode';
 import { PolicyHelper } from '../../Helpers/PolicyHelper';
-import { sendNativeMessage } from '../Messaging/NativeMessaging';
+import { Messenger } from '../Messaging/NativeMessaging';
 
 export async function onCopyHandler(
     request: any,
@@ -18,7 +18,7 @@ export async function onCopyHandler(
         setClipboardContent('Copy blocked');
     }
 
-    sendNativeMessage({
+    Messenger.sendNativeMessage({
         type: MessageType.DLP,
         operation: OperationType.ClipboardCopy,
         url: sender.url,

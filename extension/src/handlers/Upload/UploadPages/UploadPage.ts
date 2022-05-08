@@ -2,7 +2,7 @@ import { MessageType } from "../../../Enums/MessageType";
 import { OperationType } from "../../../Enums/OperationType";
 import { PolicyMode } from "../../../Enums/PolicyMode";
 import { IDlpOperationHandler } from "../../IDlpOperationHandler"
-import { sendNativeMessage } from "../../Messaging/NativeMessaging";
+import { Messenger } from "../../Messaging/NativeMessaging";
 
 export type URLPattern = string | RegExp;
 
@@ -55,7 +55,7 @@ export abstract class UploadPage implements IDlpOperationHandler {
 
     protected sendLog(request: chrome.webRequest.WebRequestBodyDetails) {
         console.log('Sending log about upload operation to database.')
-        sendNativeMessage({
+        Messenger.sendNativeMessage({
             type: MessageType.DLP,
             operation: OperationType.Upload,
             url: request.url,
