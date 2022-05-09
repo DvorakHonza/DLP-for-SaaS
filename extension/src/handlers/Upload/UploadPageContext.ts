@@ -27,7 +27,13 @@ export class UploadPageContext {
         this.initSupportedUploadPages();
     }
 
-    public setUploadPage(tabId: number, page: string) {
+    /**
+     * Sets page handler based on page opened in active tab
+     * @param tabId Id of active tab
+     * @param page Host name of opened page in the tab with tabId
+     * @returns nothing
+     */
+    public setUploadPage(tabId: number, page: string): void {
         if (this.safeStorages.includes(page)) {
             console.log('This page is configured as a safe storage. Uploading will not be affected.');
             return;
@@ -44,6 +50,10 @@ export class UploadPageContext {
         this.page = this.pageContexts[tabId];
     }
 
+    /**
+     * Changes existing upload pages based on active tab
+     * @param tabId Id of the active tab
+     */
     public switchUploadPageContext(tabId: number) {
         try {
             this.page = this.pageContexts[tabId];
@@ -54,6 +64,10 @@ export class UploadPageContext {
         }
     }
 
+    /**
+     * Removes upload page based on active tab
+     * @param tabId Id of the active tab
+     */
     public removeUploadPageContext(tabId: number) {
         try {
             console.log(`Deleting page context for ${this.pageContexts[tabId].Name} in tab no. ${tabId}`)
@@ -64,10 +78,20 @@ export class UploadPageContext {
         }
     }
 
+    /**
+     * Determines whether an HTTP request contains file upload
+     * @param detail An HTTP request detail
+     * @returns true if request contains file upload, false otherwise
+     */
     public containsFileUpload(detail: chrome.webRequest.WebRequestBodyDetails): boolean {
         return this.page.containsFileUpload(detail);
     }
 
+    /**
+     * Executes a corrective action based on a set policy
+     * @param request Request detail
+     * @returns BlockingRequest if policy is set Block, void otherwise
+     */
     public executeAction(request: chrome.webRequest.WebRequestBodyDetails) {
         return this.page.processRequest(request, this.uploadPolicy);
     }
