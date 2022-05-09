@@ -55,7 +55,7 @@ export class Messenger {
         chrome.runtime.lastError
         ? console.error(`Connection to ${Messenger.port?.name} crashed: ${chrome.runtime.lastError.message}`)
         : console.log(`Connection closed${Messenger.port?.name ?? ` by ${Messenger.port?.name}`}.`);
-        console.log(port);
+        Messenger.port = undefined;
     }
     
     private static prepareAndSendMessage(message: NativeMessage) {
