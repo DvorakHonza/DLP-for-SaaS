@@ -21,7 +21,8 @@
         "identity",
         "identity.email",
         "webRequest",
-        "webRequestBlocking"
+        "webRequestBlocking",
+        "notifications"
     ],
     "storage": {
         "managed_schema": "schema.json"

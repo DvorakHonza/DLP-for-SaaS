@@ -1,6 +1,11 @@
 import { PolicyHelper } from "./PolicyHelper";
 
 const safeStorageScripts = ['clipboard.js', 'screenCapture.js'];
+var safeStorages: string[] = [];
+
+export function setSafeStoragesForScriptInjector() {
+    safeStorages = PolicyHelper.getSafeStorages();
+}
 
 export async function injectToSafeStorageTab(
     tabId: number,
@@ -35,7 +40,6 @@ function injectScript(script: string, tabId: number, tab: chrome.tabs.Tab,) {
 }
 
 function shouldInject(changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab): boolean {
-    let safeStorages = PolicyHelper.getSafeStorages();
     let isSafeStorage = safeStorages
         .map(value => tab.url?.includes(value))
         .some(value => value);

@@ -43,7 +43,6 @@ export class Messenger {
         this.prepareAndSendMessage(message);
     }
     
-    
     private static onNativeMessage(message: ResponseMessage, port: chrome.runtime.Port) {
         if (message.Successful)
             console.log('Log was succesfully saved to database.');
