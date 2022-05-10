@@ -1,6 +1,6 @@
 document.addEventListener(
     'copy',
-    function(){
+    function(event){
         chrome.runtime.sendMessage(
             { script: "clipboard.js" },
         );

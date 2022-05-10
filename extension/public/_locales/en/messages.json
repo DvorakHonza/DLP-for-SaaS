@@ -8,11 +8,11 @@
         "description": "Extension description"
     },
     "blockNotificationTitle": {
-        "message": "Operation was blocked in accordance with security policy.",
+        "message": "Operation was blocked in accordance with security policy",
         "description": "Title for notification in block mode"
     },
     "notifyNotificationTitle": {
-        "message": "Choose an action for this operation.",
+        "message": "This operation is not allowed. Log informing about it will be created",
         "description": "Title for notification in notify mode"
     },
     "uploadNotificationMessage": {

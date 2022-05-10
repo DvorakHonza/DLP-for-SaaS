@@ -12,7 +12,7 @@
         "description": "Title for notification in block mode"
     },
     "notifyNotificationTitle": {
-        "message": "Vyberte akci pro tuto operaci",
+        "message": "Tato operace není povolena, bude o ní vytvořen záznam",
         "description": "Title for notification in notify mode"
     },
     "uploadNotificationMessage": {
