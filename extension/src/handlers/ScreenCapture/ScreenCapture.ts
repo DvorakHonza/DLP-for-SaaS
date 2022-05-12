@@ -6,11 +6,17 @@ import { PolicyHelper } from "../../Helpers/PolicyHelper";
 import { setClipboardContent } from "../Clipboard/Clipboard";
 import { Messenger } from "../Messaging/NativeMessaging";
 
+/**
+ * chrome.runtime.onMessage handler for a message from screenCapture.js content script
+ * @param request Received message
+ * @param sender Sender of the message
+ * @param sendResponse Callback for sending a response to Sender
+ */
 export function screenCaptureHandler(
     request: any,
     sender: chrome.runtime.MessageSender,
     sendResponse: (response?: any) => void
-): boolean | Promise<boolean> {
+): boolean | undefined {
     let clipboardPolicy = PolicyHelper.getStoragePolicy('screenCapture');
     console.log('Taking screenshot detected');
     

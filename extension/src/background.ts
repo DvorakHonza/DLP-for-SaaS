@@ -7,7 +7,7 @@ import {
     setUploadPageContextOnTabChange
 } from './handlers/Upload/Upload';
 import { PolicyHelper } from './Helpers/PolicyHelper';
-import { injectToSafeStorageTab, setSafeStoragesForScriptInjector } from './Helpers/ScriptInjector';
+import { injectToSafeStorageTab, removeInjectedInfo, setSafeStoragesForScriptInjector } from './Helpers/ScriptInjector';
 
 // Fetch policy settings from storage
 PolicyHelper.init(() => {
@@ -25,6 +25,7 @@ chrome.runtime.onMessage.addListener(onMessageHandler);
 
 // Injecting hadlers    
 chrome.tabs.onUpdated.addListener(injectToSafeStorageTab);
+chrome.tabs.onRemoved.addListener(removeInjectedInfo);
 
 //Page context handlers
 chrome.tabs.onUpdated.addListener(setUploadPageContext);
