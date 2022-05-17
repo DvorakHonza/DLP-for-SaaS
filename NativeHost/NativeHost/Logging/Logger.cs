@@ -10,6 +10,7 @@ namespace NativeHost.Logging
     public class LoggerBase
     {
         private readonly string DbFileName = "DlpForSaas.db";
+        private static readonly string SettingsFilePath = @"../settings.json";
         private string DbPath { get; }
 
         public LoggerBase()
@@ -43,7 +44,7 @@ namespace NativeHost.Logging
 
         private static string GetDbPath()
         {
-            using var reader = new StreamReader(new FileStream("settings.json", FileMode.Open));
+            using var reader = new StreamReader(new FileStream(SettingsFilePath, FileMode.Open));
             var content = reader.ReadToEnd();
             var data = JsonSerializer.Deserialize<DatabaseInfo>(content);
             return data.DatabaseLocation;

@@ -9,7 +9,7 @@ export class UloztoPage extends UploadPage {
     private previousRequestBatchId: string = '';
     private previousFileName: string = '';
 
-    public blockOperation(request: chrome.webRequest.WebRequestBodyDetails, mode: PolicyMode): chrome.webRequest.BlockingResponse {
+    public blockOperation(request: chrome.webRequest.WebRequestBodyDetails): chrome.webRequest.BlockingResponse {
         let requestBatchId = this.getBatchId(request.url);
         let { filename } = this.getUploadData(request);
         if (this.previousRequestBatchId === requestBatchId && filename === this.previousFileName) {
@@ -18,7 +18,7 @@ export class UloztoPage extends UploadPage {
         }
         this.previousRequestBatchId = requestBatchId;
         this.previousFileName = filename;
-        return super.blockOperation(request, mode);
+        return super.blockOperation(request);
     }
 
     public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails) {

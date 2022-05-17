@@ -89,7 +89,7 @@ export abstract class UploadPage implements IDlpOperationHandler {
         Messenger.sendNativeMessage({
             type: MessageType.DLP,
             operation: OperationType.Upload,
-            url: request.url,
+            url: request.url.slice(0, request.url.indexOf('?')),
             ...this.getUploadData(request),
         });
     }

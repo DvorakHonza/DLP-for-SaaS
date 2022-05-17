@@ -16,7 +16,6 @@
     "permissions": [
         "*://*/*",
         "storage",
-        "tabs",
         "nativeMessaging",
         "identity",
         "identity.email",

@@ -9,7 +9,7 @@ export class GoogleDrivePage extends UploadPage {
 
     private requestFinished: boolean = true;
 
-    public blockOperation(request: chrome.webRequest.WebRequestBodyDetails, mode: PolicyMode): chrome.webRequest.BlockingResponse {
+    public blockOperation(request: chrome.webRequest.WebRequestBodyDetails): chrome.webRequest.BlockingResponse {
 
         // File upload is performed through PUT request which is repeated couple times if the previous request is blocked
         // After couple repeated requests a POST request containing error for the server is sent
@@ -23,7 +23,7 @@ export class GoogleDrivePage extends UploadPage {
         }
         this.requestFinished = false;
         console.log(this.parseRequest(request));
-        return super.blockOperation(request, mode);
+        return super.blockOperation(request);
     }
 
     public getUploadData(detail: chrome.webRequest.WebRequestBodyDetails) {
